@@ -1,45 +1,39 @@
 <script>
-  import svelteLogo from './assets/svelte.svg'
-  import Counter from './lib/Counter.svelte'
+  import "./stores/menu";
+  import { menu, total } from "./stores/stores";
 </script>
 
-<main>
+<!-- 
+    $ => 'Autosuscripción' 
+    Es un prefix que se usa para acceder a los datos del store que estamos referenciando
+    Se suscribe y desuscribe automáticamente
+-->
+
+<h1 class="text-4xl font-bold text-center my-10">Pizzeria Don Chelo</h1>
+
+<!-- Gral container -->
+<div class="flex">
+  <!-- Pizzas menu -->
+  <div class="flex flex-wrap gap-5 w-2/3 justify-center">
+    {#each $menu as { id, img: src, name, price } (id)}
+      <div class="flex flex-col items-center w-1/5">
+        <img {src} alt={name} />
+        <p class="font-bold">{name}</p>
+        <p>${price}</p>
+        <button class="bg-red-300 font-bold px-4 py-2 rounded-md my-3"
+          >Agregar</button
+        >
+      </div>
+    {/each}
+  </div>
+  <!-- End of Pizzas menu -->
+
+  <!-- Summary -->
   <div>
-    <a href="https://vitejs.dev" target="_blank"> 
-      <img src="/vite.svg" class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank"> 
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+    <h2 class="text-2xl font-bold">Items</h2>
+    <p />
+    <h2 class="text-2xl font-bold">Total</h2>
+    <p class="text-xl">${$total}</p>
   </div>
-  <h1>Vite + Svelte</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
-</main>
-
-<style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
-</style>
+  <!-- End of Summary -->
+</div>
