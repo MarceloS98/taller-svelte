@@ -1,15 +1,27 @@
 import { writable, derived, readable } from "svelte/store";
 import { pizzas } from "./menu";
 
-// Creamos el store con base en el array pizzas
-export let menu = readable(pizzas);
+// Store con base en el array pizzas de la API
+export let pizzasStore = readable(pizzas);
 
-// Crear store para carrito
+// Menu derivado de pizzaStore. Se le agrega cantidad
+export let menu = derived(pizzasStore, ($pizzas) => {
+  return $pizzas.map((pizza) => {
+    return { ...pizza, quantity: 1 };
+  });
+});
 
-// Crear funcion para agregar item al carrito con el boton agregar
+// Carrito
+export let cart = writable([]);
 
-// Cambiar la logica para que deduzca el total a partir del carrito y ya no del menu
-export let total = derived(menu, ($menu) => {
-  let precioTotal = $menu.reduce((total, pizza) => total + pizza.price, 0);
-  return precioTotal;
+// Monto total que deriva del carrito.
+/**
+ * Por cada item se multiplica quantity * price
+ * El resultante es la suma de los resultados de todos los items, los cuales se van acumulando en 'total'
+ **/
+export let total = derived(cart, ($cart) => {
+  return $cart.reduce(
+    (total, pizza) => total + pizza.price * pizza.quantity,
+    0
+  );
 });
