@@ -1,8 +1,20 @@
 <script>
-  import { cart, total } from "../stores/stores";
+  import { cart } from "../stores/stores";
 
   const removeCartPizza = (id) => {
     cart.update(($cart) => $cart.filter((pizza) => pizza.id !== id));
+  };
+
+  // Monto total que deriva del carrito.
+  /**
+   * Por cada item se multiplica quantity * price
+   * El resultante es la suma de los resultados de todos los items, los cuales se van acumulando en 'total'
+   **/
+  const calcTotal = ($cart) => {
+    return $cart.reduce(
+      (total, pizza) => total + pizza.price * pizza.quantity,
+      0
+    );
   };
 </script>
 
@@ -24,5 +36,5 @@
   {/each}
 
   <h2 class="text-2xl font-bold mt-3 mb-2">Total</h2>
-  <p class="text-xl">${$total ? $total.toFixed(2) : 0}</p>
+  <p class="text-xl">${calcTotal($cart) ? calcTotal($cart).toFixed(2) : 0}</p>
 </div>

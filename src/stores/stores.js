@@ -13,15 +13,3 @@ export let menu = derived(pizzasStore, ($pizzas) => {
 
 // Carrito
 export let cart = writable([]);
-
-// Monto total que deriva del carrito.
-/**
- * Por cada item se multiplica quantity * price
- * El resultante es la suma de los resultados de todos los items, los cuales se van acumulando en 'total'
- **/
-export let total = derived(cart, ($cart) => {
-  return $cart.reduce(
-    (total, pizza) => total + pizza.price * pizza.quantity,
-    0
-  );
-});

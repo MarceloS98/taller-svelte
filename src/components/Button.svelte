@@ -2,9 +2,6 @@
   import { menu, cart } from "../stores/stores";
 
   export let id;
-  export let src;
-  export let name;
-  export let price;
 
   // Se busca en el menu la pizza que se quiere agregar
   const findPizza = (id) => {
@@ -27,12 +24,7 @@
   };
 </script>
 
-<div class="flex flex-col items-center w-1/5">
-  <img {src} alt={name} />
-  <p class="font-bold">{name}</p>
-  <p>${price}</p>
-  <button
-    class="bg-red-300 font-bold px-4 py-2 rounded-md my-3"
-    on:click={() => add(findPizza(id))}>Agregar</button
-  >
-</div>
+<button
+  class="bg-red-300 font-bold px-4 py-2 rounded-md my-3"
+  on:click={() => add(findPizza(id))}>Agregar</button
+>
